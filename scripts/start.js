@@ -130,11 +130,11 @@ function setupCompiler(host, port, protocol) {
 function connectToDB() {
   //Postgres connection details
   let pool = new pg.Pool({
-    user: 'deshgewp',
-    database: 'deshgewp',
-    password: '5J0b9DTSnbCFuoo7vQ546f384IThLb8k',
-    host: 'horton.elephantsql.com',
-    port: 5432,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     max: 20
   });
 
