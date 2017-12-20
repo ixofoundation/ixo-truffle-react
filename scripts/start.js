@@ -153,6 +153,9 @@ function onProxyError(proxy) {
 function addMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
+
+  require('../src/db/routes')(devServer);
+
   var proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
     // Paths with dots should still use the history fallback.
