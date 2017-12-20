@@ -17,7 +17,7 @@ import Profile from './user/layouts/profile/Profile'
 import store from './store'
 
 // Initialize react-router-redux.
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
 // Initialize web3 and set in Redux.
 getWeb3
@@ -26,7 +26,7 @@ getWeb3
 })
 .catch(() => {
   console.log('Error in web3 initialization.')
-})
+});
 
 ReactDOM.render((
     <Provider store={store}>
@@ -41,4 +41,4 @@ ReactDOM.render((
     </Provider>
   ),
   document.getElementById('root')
-)
+);

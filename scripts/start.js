@@ -21,7 +21,6 @@ var prompt = require('react-dev-utils/prompt');
 var pathExists = require('path-exists');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
-var pg = require('pg');
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
@@ -31,7 +30,6 @@ var isInteractive = process.stdout.isTTY;
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
-
 
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = process.env.PORT || 3000;
@@ -85,7 +83,6 @@ function setupCompiler(host, port, protocol) {
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
-      connectToDB();
     }
 
     if (showInstructions) {
@@ -123,33 +120,6 @@ function setupCompiler(host, port, protocol) {
       console.log('You may use special comments to disable some warnings.');
       console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
       console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
-    }
-  });
-}
-
-function connectToDB() {
-  //Postgres connection details
-  let pool = new pg.Pool({
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    max: 20
-  });
-
-  pool.connect((err, db, done) => {
-    if (err) {
-      console.log(err);
-    } else {
-      db.query('SELECT current_database()', (err, table) => {
-        done();
-        if (err) {
-          return console.log(err);
-        } else {
-          console.log('Connected to Postgres DB: ' + JSON.stringify(table, null, '\t'));
-        }
-      });
     }
   });
 }
